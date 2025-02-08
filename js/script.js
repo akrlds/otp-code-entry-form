@@ -68,16 +68,21 @@ function handleInput(event, index, textBoxes) {
 }
 
 function handleKeyDown(event, index, textBoxes) {
-    /* If backspace or delete is pressed, empty
-    the textbox and focus on the previous one. */
+    /* If backspace or delete is pressed and the textbox is empty,
+    focus on the previous one. Otherwise, just clear the value. */
 
     const current = textBoxes[index];
     const prev = textBoxes[index - 1];
 
-    if ((event.key === 'Backspace' || event.key === 'Delete') && current.value === '') {
-        event.preventDefault();
-        if (prev) {
-            prev.focus();
+    if (event.key === 'Backspace' || event.key === 'Delete') {
+        if (current.value === '') {
+            event.preventDefault();
+            if (prev) {
+                prev.focus();
+            }
+        } else {
+            current.value = '';
+            event.preventDefault();
         }
     }
 }
